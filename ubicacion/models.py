@@ -1,9 +1,7 @@
 from django.db import models
 import uuid
 
-class Ubicacion(models.Model):
-    
-    DEPARTAMENTOS_COLOMBIA = [
+DEPARTAMENTOS_COLOMBIA = [
         ('Amazonas', 'Amazonas'),
         ('Antioquia', 'Antioquia'),
         ('Arauca', 'Arauca'),
@@ -37,8 +35,9 @@ class Ubicacion(models.Model):
         ('Vaupés', 'Vaupés'),
         ('Vichada', 'Vichada'),
     ]
-    
-    VIA = [
+
+
+VIA = [
         ('Calle', 'Calle'),
         ('Carrera', 'Carrera'),
         ('Avenida', 'Avenida'),
@@ -48,7 +47,8 @@ class Ubicacion(models.Model):
         ('Camino', 'Camino'),
     ]
 
-    TIPO_UBICACION = [
+
+TIPO_UBICACION = [
         ('barrio', 'Barrio'),
         ('conjunto', 'Conjunto'),
         ('torre', 'Torre'),
@@ -59,17 +59,18 @@ class Ubicacion(models.Model):
         ('camino', 'Camino'),
         ('lote', 'Lote'),
     ]
-    
+
+class Ubicacion(models.Model):  
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False, verbose_name="identificador")
     fecha_creacion = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
-    fecha_modificacion = models.DateTimeField(auto_now=True, verbose_name="Fecha de creación")
+    fecha_modificacion = models.DateTimeField(auto_now=True, verbose_name="Fecha de modificación")
 
 
     departamento = models.CharField(max_length=30, choices=DEPARTAMENTOS_COLOMBIA, default="Santander", verbose_name="Departamento")
     ciudad = models.CharField(max_length=100, verbose_name="Ciudad")
     via = models.CharField(max_length=50, choices=VIA, default="calle", verbose_name="Vía")
     numero1 = models.CharField(max_length=100, verbose_name="Nombre o número de vía")
-    numero2 = models.CharField(max_length=100, verbose_name="Nomenclatura")
+    numero2 = models.CharField(max_length=100, null=True, blank=True, verbose_name="Nomenclatura")
     tipo_ubicacion = models.CharField(max_length=100, choices=TIPO_UBICACION, default="barrio", verbose_name="Tipo de ubicación")
     nombre_ubicacion = models.CharField(max_length=100, verbose_name="Nombre de ubicación")
     detalle_adicional = models.TextField(null=True, blank=True, verbose_name="Detalles adicionales")
